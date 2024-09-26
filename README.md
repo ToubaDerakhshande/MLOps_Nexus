@@ -1,9 +1,9 @@
 # Team_MLOps
 ## Team Member 1
 ### Task Title: Setup Flask Application and Create Home Page
-#### - Set up the Flask project structure (app.py, templates, static folders).
-#### - Create a home page (/) that introduces the application and provides navigation links to the login, registration, and input pages.
-#### - Ensure proper routing and basic structure of the Flask application.
+	- Set up the Flask project structure (app.py, templates, static folders).
+	- Create a home page (/) that introduces the application and provides navigation links to the login, registration, and input pages.
+	- Ensure proper routing and basic structure of the Flask application.
 #### Follow the steps below to perform the above task:
 ```
 1. touch app.py
