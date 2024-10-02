@@ -1,0 +1,13 @@
+{% extends "base,html" %}
+{% block title %}The result page{%endblock%}
+
+{% block content %}
+
+    <div>
+        <h2>Predicted Breast Cancer</h2>
+        <p>The result is: <strong>${{ diagnosis }}</strong></p>
+        <a href="{{ url_for('input_data') }}">Predict Again</a>
+    </div>
+    
+
+{% endblock %}
