@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import secrets
-from model import load_model, predict  
+from models import load_model, predict  
 
 app = Flask(__name__)
 
