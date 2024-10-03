@@ -17,11 +17,10 @@ def load_model():
 model = load_model()
 
 
-def predict(features):
+def prediction_result(features):
     
     input_df = pd.DataFrame([features])[selected_features]
 
-    
     prediction = model.predict(input_df)
     
     return prediction[0]
