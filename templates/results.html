@@ -1,12 +1,21 @@
 {% extends "base,html" %}
-{% block title %}The result page{%endblock%}
+{% block title %}Prediction Result{%endblock%}
 
 {% block content %}
 
-    <div>
-        <h2>Predicted Breast Cancer</h2>
-        <p>The result is: <strong>${{ diagnosis }}</strong></p>
-        <a href="{{ url_for('input_data') }}">Predict Again</a>
+    <div class="container">
+        <h2 class="mt-5">Predicted Result</h2>
+        <p class="lead">The model predicts that the tumor is: <strong>${{ result }}</strong></p>
+        {% if result== 'Malignant' %}
+           <div class="alert alert-danger">
+            Please consult your healthcare provider for further testing and guidance.
+           </div>
+        {% else %}
+           <div class="alert alert-sucess">
+            The tumor is likely benign, but continue regular checkups.
+           </div>
+        {% endif %}
+        <a href="{{ url_for('input_data') }}" class="btn btn-primary">Go Back</a>
     </div>
     
 
