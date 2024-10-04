@@ -52,8 +52,8 @@ def login():
             session['username'] = user.username
             flash('Log in succesful!','success')
             return redirect(url_for('input_data'))
-        # else:
-        #      flash('You must register!','danger') 
+        else:
+             flash('You must register!','danger') 
     return render_template('login.html')
 
 @app.route('/logout')
@@ -84,12 +84,16 @@ def input_data():
         # Interpret the result
         result = 'Malignant' if prediction == 1 else 'Benign'
         # Redirect to the result page with the prediction
-        return render_template('result.html', prediction=result)
+        # return redirect(url_for("result"), result)
+        return render_template('result.html', result= result)
 
     return render_template('input.html')
 
-@app.route('/result')
+@app.route('/result' , methods=['GET', 'POST'])
 def result():
+    # if request.method == 'GET':
+    #     result = request.args.get('result') 
+    #     print(result)
     return render_template('result.html')
 
 @app.route('/history')
