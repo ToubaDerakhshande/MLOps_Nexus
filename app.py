@@ -2,11 +2,10 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import secrets
+
 from models import  predict  
 
 app = Flask(__name__)
-
-
 
 #app configs
 app.config['SECRET_KEY'] = secrets.token_hex(16)
@@ -53,6 +52,7 @@ def input_data():
         result = 'Malignant' if prediction == 1 else 'Benign'
         # Redirect to the result page with the prediction
         return render_template('result.html', prediction=result)
+
     return render_template('input.html')
 
 @app.route('/result')
@@ -65,3 +65,5 @@ def history():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
+
