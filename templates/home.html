@@ -1,14 +1,32 @@
 {% extends "base.html" %}
 
-{%block title%}
+{% block title %}
 Home
-{%endblock%}
+{% endblock %}
 
 {% block content %}
-    <div class="container text-center">
-        <h1>Smart Cancer Recognition Website</h1>
-        <nav>
-        <a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('register') }}">Register</a> | <a href="{{ url_for('input_data')}}">Make a Prediction</a>
-        </nav>
+    <div class="container home-page">
+        <header class="mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="logo"><i class="fas fa-home" style="color: darkblue;"></i> Home</div>
+                <nav>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-outline-primary">Register</a>
+                    <a href="{{ url_for('input_data') }}" class="btn btn-outline-primary">Prediction</a>
+                </nav>
+            </div>
+        </header>
+        <main class="text-center mt-4">
+            <h1 class="display-4">Smart Cancer Recognition Website</h1>
+            <br>
+            <div class="image-container text-center mb-4">
+                <img src="{{ url_for('static', filename='images/cancer_research.webp') }}" alt="Cancer Research" class="img-fluid" style="width: 500px; height: 400px;">
+            </div>
+            <div class="text-left mt-5">
+                <h2>How Our Smart Cancer Recognition Works?</h2>
+                <p>Our advanced platform uses machine learning algorithms to analyze clinical features that can indicate the presence of a tumor. By inputting key features such as the radius, perimeter, and concavity of the tumor cells, our model can predict the likelihood of the tumor being benign or malignant.</p>
+                <p>Our model is designed to assist healthcare professionals and researchers in early diagnosis, potentially increasing the chances of successful treatment. Early detection is critical in cancer treatment, and we strive to make it easier for you to assess the situation with accuracy.</p>
+            </div>
+        </main>
     </div>
 {% endblock %}

@@ -3,7 +3,6 @@ from wtforms import FloatField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
 
 class CancerDataForm(FlaskForm):
-
     mean_radius = FloatField('Mean Radius', validators=[DataRequired(), NumberRange(min=6.98, max=28.11, message="Radius must be between 6.98 and 28.11")])
     mean_perimeter = FloatField('Mean Perimeter', validators=[DataRequired(), NumberRange(min=43.79, max=188.50, message="Perimeter must be between 43.79 and 188.50")])
     mean_area = FloatField('Mean Area', validators=[DataRequired(), NumberRange(min=143.50, max=2501.00, message="Area must be between 143.50 and 2501.00")])

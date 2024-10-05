@@ -1,0 +1,61 @@
+body {
+    background-color: #f8f9fa;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    color: #16529b;
+    font-weight: bold;
+}
+
+nav a {
+    margin-right: 15px;
+}
+
+.container {
+    padding: 0.5rem;
+}
+
+h1, h2 {
+    color: #343a40;
+}
+
+.btn-outline-primary, .btn-outline-secondary {
+    margin-right: 10px;
+}
+
+/* Dark background for table header with yellow-green text */
+.table thead th {
+    background-color: darkgray !important; /* Dark green background for table header */
+    color: black !important; /* Yellow-green text for the header */
+}
+
+/* Alternate row colors for better readability */
+.table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+/* Change font size for better readability */
+.table {
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+/* Ensure the table takes full width of the container */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Style for result column */
+.table tbody td.text-danger {
+    color: red !important;
+}
+
+.table tbody td.text-success {
+    color: green !important;
+}
