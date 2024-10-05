@@ -19,6 +19,16 @@ class User(db.Model):
     username = db.Column(db.String(150),nullable=False,unique=True)
     password = db.Column(db.String(150),nullable=False)
 
+# login_required method
+def login_required(f):
+    def wrap(*args, **kwargs):
+        if 'username' not in session:
+            flash('You need to login first!', 'danger')
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    wrap.name = f.name
+    return wrap
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -29,17 +39,23 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        hashed_pass = bcrypt.generate_password_hash(password).decode('utf_8')
+        
+        # Check if username already exists
+        user_exists = User.query.filter_by(username=username).first()
+        if user_exists:
+            flash('Username already exists. Please choose a different one.', 'danger')
+            return redirect(url_for('register'))
 
-        new_user = User(username = username,password = hashed_pass)
+        # If username does not exist, proceed with registration
+        hashed_pass = bcrypt.generate_password_hash(password).decode('utf_8')
+        new_user = User(username=username, password=hashed_pass)
         db.session.add(new_user)
         db.session.commit()
 
-        flash('Registeration was successful, please log in.','success')
+        flash('Registration was successful, please log in.', 'success')
         return redirect(url_for('login'))
-    
-
     return render_template('register.html')
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -48,12 +64,21 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-        if user and bcrypt.check_password_hash(user.password,password):
-            session['username'] = user.username
-            flash('Log in succesful!','success')
-            return redirect(url_for('input_data'))
-        # else:
-        #      flash('You must register!','danger') 
+        
+        if user:
+            if bcrypt.check_password_hash(user.password, password):
+                # If password is correct
+                session['username'] = user.username
+                session['user_id'] = user.id
+                flash('Log in successful!', 'success')
+                return redirect(url_for('dashboard'))
+            else:
+                # If password is incorrect
+                flash('Incorrect password. Please try again.', 'warning')
+        else:
+            # If the user does not exist
+            flash('Username not found. Please register first.', 'danger')
+    
     return render_template('login.html')
 
 @app.route('/logout')
