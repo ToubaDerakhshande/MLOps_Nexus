@@ -1,10 +1,11 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from flask_bcrypt import Bcrypt
-from flask_login import login_required, UserMixin, current_user
+from form import CancerDataForm
+from datetime import datetime
+from models import predict  
 import secrets
-
-from models import  predict  
 
 app = Flask(__name__)
 
@@ -44,11 +45,11 @@ class Prediction(db.Model):
     result = db.Column(db.String(50), nullable=False)
     
     # Timestamp (when the prediction was made)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
+    date_created = db.Column(db.DateTime, default=datetime.now, nullable=False)
     
     # Link prediction to the user
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
+    
 # login_required method
 def login_required(f):
     def wrap(*args, **kwargs):
@@ -56,13 +57,12 @@ def login_required(f):
             flash('You need to login first!', 'danger')
             return redirect(url_for('login'))
         return f(*args, **kwargs)
-    wrap.name = f.name
+    wrap.__name__ = f.__name__
     return wrap
 
 @app.route('/')
 def home():
     return render_template('home.html')
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -87,14 +87,12 @@ def register():
     return render_template('register.html')
 
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():  
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-
         
         if user:
             if bcrypt.check_password_hash(user.password, password):
@@ -112,80 +110,82 @@ def login():
     
     return render_template('login.html')
 
+
 @app.route('/logout')
 def logout():
     session.pop('username')
     flash('You have been logged out!','info')
-    return redirect(url_for('login'))
+    return redirect(url_for('home'))
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
 
 @app.route('/input' , methods=['GET', 'POST'])
 @login_required
 def input_data():
-    if request.method == 'POST':
-        try:
-            # Retrieve and store individual feature inputs
-            mean_radius = float(request.form['mean_radius'])
-            mean_perimeter = float(request.form['mean_perimeter'])
-            mean_area = float(request.form['mean_area'])
-            mean_concavity = float(request.form['mean_concavity'])
-            mean_concave_points = float(request.form['mean_concave_points'])
-            worst_radius = float(request.form['worst_radius'])
-            worst_perimeter = float(request.form['worst_perimeter'])
-            worst_area = float(request.form['worst_area'])
-            worst_concavity = float(request.form['worst_concavity'])
-            worst_concave_points = float(request.form['worst_concave_points'])
+    form = CancerDataForm()
+    if form.validate_on_submit():
+        features = {
+            'mean radius': form.mean_radius.data,
+            'mean perimeter': form.mean_perimeter.data,
+            'mean area': form.mean_area.data,
+            'mean concavity': form.mean_concavity.data,
+            'mean concave points': form.mean_concave_points.data,
+            'worst radius': form.worst_radius.data,
+            'worst perimeter': form.worst_perimeter.data,
+            'worst area': form.worst_area.data,
+            'worst concavity': form.worst_concavity.data,
+            'worst concave points': form.worst_concave_points.data
+        }
 
-            # Make a prediction using the predict function
-            features = [
-                mean_radius, mean_perimeter, mean_area, mean_concavity, 
-                mean_concave_points, worst_radius, worst_perimeter, 
-                worst_area, worst_concavity, worst_concave_points
-            ]
-            predicted_result = predict(features)
-
-            # Interpret the result
-            result = 'Malignant' if predicted_result == 1 else 'Benign'
-
-            # Store the inputs and prediction result in the database
-            prediction = Prediction(
-                mean_radius=mean_radius,
-                mean_perimeter=mean_perimeter,
-                mean_area=mean_area,
-                mean_concavity=mean_concavity,
-                mean_concave_points=mean_concave_points,
-                worst_radius=worst_radius,
-                worst_perimeter=worst_perimeter,
-                worst_area=worst_area,
-                worst_concavity=worst_concavity,
-                worst_concave_points=worst_concave_points,
+        prediction = predict(features)
+        result = 'Malignant' if prediction == 1 else 'Benign'
+        
+        # Save the prediction to the database
+        if 'user_id' in session:
+            new_prediction = Prediction(
+                mean_radius=features['mean radius'],
+                mean_perimeter=features['mean perimeter'],
+                mean_area=features['mean area'],
+                mean_concavity=features['mean concavity'],
+                mean_concave_points=features['mean concave points'],
+                worst_radius=features['worst radius'],
+                worst_perimeter=features['worst perimeter'],
+                worst_area=features['worst area'],
+                worst_concavity=features['worst concavity'],
+                worst_concave_points=features['worst concave points'],
                 result=result,
-                user_id=current_user.id  # Assuming the user is logged in
+                user_id= session['user_id']
             )
-            db.session.add(prediction)
+        
+            db.session.add(new_prediction)
             db.session.commit()
+            
+        # Store the result in the session
+        session['result'] = result
 
-            # Redirect to the result page with the prediction
-            return render_template('result.html', result=result)
-
-        except ValueError:
-            flash("Invalid input. Please enter numeric values.", "danger")
-            return render_template('input.html')
-
-    return render_template('input.html')
+        return redirect(url_for('result'))
+        
+    return render_template('input.html', form= form)
 
 @app.route('/result')
 @login_required
 def result():
-    result = request.args.get('result')  # Get result from query parameter
-    return render_template('result.html')
+    result = session.get('result')  # Get result from query parameter
+    if result is None:
+        # Handle case where result is not provided, redirect back to input or an error page
+        flash('No result available. Please input the data first.', 'warning')
+        return redirect(url_for('input_data'))
+    return render_template('result.html', result= result)
 
 @app.route('/history')
 @login_required
 def history():
     # Fetch the predictions made by the current user
-    predictions = Prediction.query.filter_by(user_id=current_user.id).order_by(Prediction.date_created.desc()).all()
+    predictions = Prediction.query.filter_by(user_id=session['user_id']).order_by(Prediction.date_created.desc()).all()
     # Pass the predictions to the history template
-    return render_template('history.html', predictions=predictions)
+    return render_template('history.html', predictions=predictions, username= session['username'])
 
 if __name__ == '__main__':
     
@@ -193,9 +193,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         
-    app.run(debug=True, ssl_context='adhoc')
-
- 
-    
-
-
+    app.run(debug=True)
