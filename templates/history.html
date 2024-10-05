@@ -4,42 +4,61 @@
 
 {% block content %}
     
-<!-- Navigation link to the home page -->
+<!-- Navigation link to the dashboard page -->
 <nav>
-    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
 </nav>
 
 <div class="container text-center mt-4">
     
-    <h1 class="my-4">Your Prediction History</h1>
+    <h1 class="my-4">{{ username }} Prediction History</h1>
     
     <!-- Display prediction history if there are any predictions -->
-    <ul class="list-group">
+    <div class="table-responsive">
         {% if predictions %}
-            {% for prediction in predictions %}
-                <li class="list-group-item mb-3">
-                    <strong>Date:</strong> {{ prediction.date_created.strftime('%Y-%m-%d %H:%M:%S') }}<br>
-                    
-                    <strong>Inputs:</strong>
-                    <ul>
-                        <li><strong>Mean Radius:</strong> {{ prediction.mean_radius }}</li>
-                        <li><strong>Mean Perimeter:</strong> {{ prediction.mean_perimeter }}</li>
-                        <li><strong>Mean Area:</strong> {{ prediction.mean_area }}</li>
-                        <li><strong>Mean Concavity:</strong> {{ prediction.mean_concavity }}</li>
-                        <li><strong>Mean Concave Points:</strong> {{ prediction.mean_concave_points }}</li>
-                        <li><strong>Worst Radius:</strong> {{ prediction.worst_radius }}</li>
-                        <li><strong>Worst Perimeter:</strong> {{ prediction.worst_perimeter }}</li>
-                        <li><strong>Worst Area:</strong> {{ prediction.worst_area }}</li>
-                        <li><strong>Worst Concavity:</strong> {{ prediction.worst_concavity }}</li>
-                        <li><strong>Worst Concave Points:</strong> {{ prediction.worst_concave_points }}</li>
-                    </ul>
-
-                    <strong>Result:</strong> {{ prediction.result }}
-                </li>
-            {% endfor %}
+            <table class="table table-striped table-hover table-bordered">
+                <thead style="background-color: #4a5568; color: white;">
+                    <tr>
+                        <th style="text-align: center;">Date</th>
+                        <th style="text-align: center;">Mean Radius</th>
+                        <th style="text-align: center;">Mean Perimeter</th>
+                        <th style="text-align: center;">Mean Area</th>
+                        <th style="text-align: center;">Mean Concavity</th>
+                        <th style="text-align: center;">Mean Concave Points</th>
+                        <th style="text-align: center;">Worst Radius</th>
+                        <th style="text-align: center;">Worst Perimeter</th>
+                        <th style="text-align: center;">Worst Area</th>
+                        <th style="text-align: center;">Worst Concavity</th>
+                        <th style="text-align: center;">Worst Concave Points</th>
+                        <th style="text-align: center;">Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prediction in predictions %}
+                        <tr>
+                            <td style="text-align: center;">{{ prediction.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            <td style="text-align: center;">{{ prediction.mean_radius }}</td>
+                            <td style="text-align: center;">{{ prediction.mean_perimeter }}</td>
+                            <td style="text-align: center;">{{ prediction.mean_area }}</td>
+                            <td style="text-align: center;">{{ prediction.mean_concavity }}</td>
+                            <td style="text-align: center;">{{ prediction.mean_concave_points }}</td>
+                            <td style="text-align: center;">{{ prediction.worst_radius }}</td>
+                            <td style="text-align: center;">{{ prediction.worst_perimeter }}</td>
+                            <td style="text-align: center;">{{ prediction.worst_area }}</td>
+                            <td style="text-align: center;">{{ prediction.worst_concavity }}</td>
+                            <td style="text-align: center;">{{ prediction.worst_concave_points }}</td>
+                            <!-- Colorize Result -->
+                            <td style="text-align: center; color: {% if prediction.result == 'Malignant' %}red{% else %}green{% endif %}; font-weight: bold;">
+                                {{ prediction.result }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% else %}
-            <li class="list-group-item">No predictions available.</li>
+            <div class="alert alert-warning">No predictions available.</div>
         {% endif %}
-    </ul>
+    </div>
 </div>
+
 {% endblock %}
