@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Cancer Diagnosis Input{%endblock%}
+
+{% block content %}
+
+    <div class="container">
+        <h2 class="mt-5">Enter Cancer diagnosis Features</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label>Mean radius</label>
+                <input type="text" class="form-control" name="mean_radius" required>
+            </div>
+            <div class="form-group">
+                <label>Mean perimeter</label>
+                <input type="text" class="form-control" name="mean_perimeter" required>
+            </div>
+            <div class="form-group">
+                <label>Mean area</label>
+                <input type="text" class="form-control" name="mean_area" required>
+            </div>
+            <div class="form-group">
+                <label>Mean concavity</label>
+                <input type="text" class="form-control" name="mean_concavity" required>
+            </div>
+            <div class="form-group">
+                <label>Mean concave points</label>
+                <input type="text" class="form-control" name="mean_concave_points" required>
+            </div>
+            <div class="form-group">
+                <label>Worst radius</label>
+                <input type="text" class="form-control" name="worst_radius" required>
+            </div>
+            <div class="form-group">
+                <label>Worst perimeter</label>
+                <input type="text" class="form-control" name="worst_perimeter" required>
+            </div>
+            <div class="form-group">
+                <label>Worst area</label>
+                <input type="text" class="form-control" name="worst_area" required>
+            </div> 
+            <div class="form-group">
+                <label>Worst concavity</label>
+                <input type="text" class="form-control" name="worst_concavity" required>
+            </div> 
+            <div class="form-group">
+                <label>Worst concave points</label>
+                <input type="text" class="form-control" name="worst_concave_points" required>
+            </div>      
+             <br>                  
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+    </div>       
+    
+{% endblock %}
