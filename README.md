@@ -9,7 +9,7 @@ It offers a clean, responsive UI with an intuitive experience.
 	- Set up the Flask project structure (app.py, templates, static folders).
 	- Create a home page (/) that introduces the application and provides navigation links to the login, registration, and input pages.
 	- Ensure proper routing and basic structure of the Flask application.
-#### Follow the steps below to perform the above task:
+#### Follow the steps below to perform the project:
 #### Installation
 Follow these steps to set up the project:
 1. Clone the repository:
@@ -38,17 +38,19 @@ smart_website_project/
 │
 ├── app.py  # Main Flask application
 ├── models.py  # Models for cancer recognition
+├──form.py 
 ├── templates/  # HTML templates
 │   ├── base.html
 │   ├── home.html
 │   ├── login.html
 │   ├── register.html
+│   ├── dashboard.html
 │   ├── input.html
 │   ├── result.html
 │   ├── history.html
 ├── static/  # Static files (CSS, JS, images, etc.)
 │   ├── css/
-│   └── js/
+│   └── images/
 ├── venv/  # Virtual environment
 └── requirements.txt  # Project dependencies
 ```
@@ -61,10 +63,12 @@ Follow these steps to create above structure:
 5. touch templates/input.html
 6. touch templates/login.html
 7. touch templates/register.html
-8. touch templates/result.html
-9. touch templates/history.html
-10. mkdir static
-11. mkdir static/css
-12. mkdir static/js
-13. touch models.py
+8. touch templates/dashboard.html
+9. touch templates/result.html
+10. touch templates/history.html
+11. mkdir static
+12. mkdir static/css
+13. mkdir static/images
+14. touch models.py
+15. touch form.py
 ```
