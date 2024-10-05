@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+    <div class="container dashboard">
+        <header class="mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="logo"><i class="fas fa-clipboard" style="color: darkblue;"></i> Dashboard</div>
+                <nav>
+                    <a href="{{ url_for('history') }}" class="btn btn-outline-primary">History</a>
+                    <a href="{{ url_for('input_data') }}" class="btn btn-outline-primary">Prediction</a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline-primary">Logout</a>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container mt-4">
+            <h2>How to Use the Prediction Tool?</h2>
+            <ol>
+                <li>Go to the <a href="{{ url_for('input_data') }}" class="btn btn-link">Prediction</a> page.</li>
+                <li>Enter the tumor features (such as radius, perimeter, area, etc.) in the respective fields.</li>
+                <li>Submit the form and wait for the result, either benign or malignant.</li>
+                <li>Check your <a href="{{ url_for('history') }}" class="btn btn-link">Prediction History</a> to view past results.</li>
+            </ol>
+        </div>
+        <div class="container mt-4">
+            <h2 class="text-left mb-4">Demo</h2>
+            <div class="text-center">
+                <img src="{{ url_for('static', filename='images/demo_animation.gif') }}" class="img-fluid" alt="Demo GIF">
+            </div>
+        </div>
+    </div>
+{% endblock %}

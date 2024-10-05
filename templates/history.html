@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction History{% endblock %}
+
+{% block content %}
+<nav>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-link">Dashboard</a>
+</nav>
+    <div class="container text-center mt-4">
+        <h1 class="my-4">{{ username|capitalize }} Prediction History</h1>
+        <div>
+            {% if predictions %}
+                <table class="table table-bordered table-hover" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Mean Radius</th>
+                            <th>Mean Perimeter</th>
+                            <th>Mean Area</th>
+                            <th>Mean Concavity</th>
+                            <th>Mean Concave Points</th>
+                            <th>Worst Radius</th>
+                            <th>Worst Perimeter</th>
+                            <th>Worst Area</th>
+                            <th>Worst Concavity</th>
+                            <th>Worst Concave Points</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prediction in predictions %}
+                            <tr>
+                                <td>{{ prediction.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>{{ prediction.mean_radius }}</td>
+                                <td>{{ prediction.mean_perimeter }}</td>
+                                <td>{{ prediction.mean_area }}</td>
+                                <td>{{ prediction.mean_concavity }}</td>
+                                <td>{{ prediction.mean_concave_points }}</td>
+                                <td>{{ prediction.worst_radius }}</td>
+                                <td>{{ prediction.worst_perimeter }}</td>
+                                <td>{{ prediction.worst_area }}</td>
+                                <td>{{ prediction.worst_concavity }}</td>
+                                <td>{{ prediction.worst_concave_points }}</td>
+                                <td class="{% if prediction.result == 'Malignant' %}text-danger{% else %}text-success{% endif %}">
+                                    <strong>{{ prediction.result }}</strong>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-warning">No predictions available.</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

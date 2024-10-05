@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Prediction Result{%endblock%}
+
+{% block content %}
+
+    <div class="container">
+        <h2 class="mt-5">Predicted Result</h2>
+        <p class="lead">
+            The model predicts that the tumor is: 
+            <strong style="color: {% if result == 'Malignant' %}red{% else %}green{% endif %};">
+                {{ result }}
+            </strong>
+        </p>
+
+        {% if result == 'Malignant' %}
+            <div class="alert alert-danger">
+                <strong>Explanation:</strong> A <strong style="color: red;">Malignant</strong> tumor means that the cells are cancerous. 
+                These cells can grow and spread to other parts of the body. It is important to consult your healthcare provider for further 
+                testing and treatment options. Early detection and action are crucial for managing malignancy.
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                <strong>Explanation:</strong> A <strong style="color: green;">Benign</strong> tumor means that the cells are non-cancerous. 
+                Benign tumors do not spread to other parts of the body and are generally not life-threatening. However, regular checkups 
+                and monitoring are still recommended to ensure the tumor does not develop into something more serious.
+            </div>
+        {% endif %}
+
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go Back</a>
+    </div>
+
+{% endblock %}
