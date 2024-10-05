@@ -6,48 +6,71 @@
     <div class="container">
         <h2 class="mt-5">Enter Cancer diagnosis Features</h2>
         <form method="POST">
-            <div class="form-group">
-                <label>Mean radius</label>
-                <input type="text" class="form-control" name="mean_radius" required>
+            {{ form.hidden_tag() }}
+            {{form.csrf_token}}
+            <div>
+                {{ form.mean_radius.label }} {{ form.mean_radius(size=20) }}
+                {% if form.mean_radius.errors %}
+                    <span style="color: red;">{{ form.mean_radius.errors[0] }}</span>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label>Mean perimeter</label>
-                <input type="text" class="form-control" name="mean_perimeter" required>
+            <div>
+                {{ form.mean_perimeter.label }} {{ form.mean_perimeter(size=20) }}
+                {% if form.mean_perimeter.errors %}
+                    <span style="color: red;">{{ form.mean_perimeter.errors[0] }}</span>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label>Mean area</label>
-                <input type="text" class="form-control" name="mean_area" required>
+            <div>
+                {{ form.mean_area.label }} {{ form.mean_area(size=20) }}
+                {% if form.mean_area.errors %}
+                    <span style="color: red;">{{ form.mean_area.errors[0] }}</span>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label>Mean concavity</label>
-                <input type="text" class="form-control" name="mean_concavity" required>
+            <div>
+                {{ form.mean_concavity.label }} {{ form.mean_concavity(size=20) }}
+                {% if form.mean_concavity.errors %}
+                    <span style="color: red;">{{ form.mean_concavity.errors[0] }}</span>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label>Mean concave points</label>
-                <input type="text" class="form-control" name="mean_concave_points" required>
+            <div>
+                {{ form.mean_concave_points.label }} {{ form.mean_concave_points(size=20) }}
+                {% if form.mean_concave_points.errors %}
+                    <span style="color: red;">{{ form.mean_concave_points.errors[0] }}</span>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label>Worst radius</label>
-                <input type="text" class="form-control" name="worst_radius" required>
+            <div>
+                {{ form.worst_radius.label }} {{ form.worst_radius(size=20) }}
+                {% if form.worst_radius.errors %}
+                    <span style="color: red;">{{ form.worst_radius.errors[0] }}</span>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label>Worst perimeter</label>
-                <input type="text" class="form-control" name="worst_perimeter" required>
+            <div>
+                {{ form.worst_perimeter.label }} {{ form.worst_perimeter(size=20) }}
+                {% if form.worst_perimeter.errors %}
+                    <span style="color: red;">{{ form.worst_perimeter.errors[0] }}</span>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label>Worst area</label>
-                <input type="text" class="form-control" name="worst_area" required>
-            </div> 
-            <div class="form-group">
-                <label>Worst concavity</label>
-                <input type="text" class="form-control" name="worst_concavity" required>
-            </div> 
-            <div class="form-group">
-                <label>Worst concave points</label>
-                <input type="text" class="form-control" name="worst_concave_points" required>
-            </div>      
-             <br>                  
-            <button type="submit" class="btn btn-primary">Predict</button>
+            <div>
+                {{ form.worst_area.label }} {{ form.worst_area(size=20) }}
+                {% if form.worst_area.errors %}
+                    <span style="color: red;">{{ form.worst_area.errors[0] }}</span>
+                {% endif %}
+            </div>
+            <div>
+                {{ form.worst_concavity.label }} {{ form.worst_concavity(size=20) }}
+                {% if form.worst_concavity.errors %}
+                    <span style="color: red;">{{ form.worst_concavity.errors[0] }}</span>
+                {% endif %}
+            </div>
+            <div>
+                {{ form.worst_concave_points.label }} {{ form.worst_concave_points(size=20) }}
+                {% if form.worst_concave_points.errors %}
+                    <span style="color: red;">{{ form.worst_concave_points.errors[0] }}</span>
+                {% endif %}
+            </div>
+            <div>
+                {{ form.submit() }}
+            </div>
         </form>
     </div>       
     
