@@ -28,16 +28,45 @@ h1, h2 {
     margin-right: 10px;
 }
 
+.container .container-table {
+    margin-top: 25px;
+    max-width: 1300px;
+    padding: 20px;
+    background-color: #e6f7ff;
+    border-radius: 8px;
+    box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.1);
+}
 /* Dark background for table header with yellow-green text */
 .table thead th {
-    background-color: darkgray !important; /* Dark green background for table header */
-    color: black !important; /* Yellow-green text for the header */
+    background-color: #0000FF !important; 
+    color: white;
+    padding: 10px;
+    vertical-align: middle !important;
+    text-align: center;
+    font-size: 13px;
 }
 
+.table-responsive {
+    overflow-x: auto;
+}
+
+table td {
+    border: 1px solid #ddd;
+}
+
+.table tbody tr {
+    text-align: center;
+    vertical-align: middle !important;
+    font-size: 13px;
+}
 /* Alternate row colors for better readability */
 .table tbody tr:nth-child(odd) {
-    background-color: #f2f2f2;
+    background-color: #fbf9f9;
 }
+.table tbody tr:nth-child(even) {
+    background-color: #87CEFA;
+}
+
 
 /* Change font size for better readability */
 .table {
@@ -59,3 +88,29 @@ h1, h2 {
 .table tbody td.text-success {
     color: green !important;
 }
+
+
+.center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh; 
+    }
+
+.form-container {
+        background-color: #e6f7ff; 
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px  rgba(0, 0, 0, 0.1); 
+        width: 100%;
+        max-width: 800px; 
+    }
+
+    .btn-primary {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        background-color: #00BFFF; 
+        border-color: #99e0ff;
+    }

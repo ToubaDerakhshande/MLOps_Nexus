@@ -3,96 +3,110 @@
 {% block title %}Cancer Diagnosis Input{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h2 class="mt-5">Enter Cancer Diagnosis Features</h2>
-        <form method="POST" class="mt-4">
-            {{ form.hidden_tag() }}
-            {{ form.csrf_token }}
 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    {{ form.mean_radius.label }} {{ form.mean_radius(class_="form-control") }}
-                    {% if form.mean_radius.errors %}
-                        <span style="color: red;">{{ form.mean_radius.errors[0] }}</span>
-                    {% endif %}
-                </div>
+<nav>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-link">Dashboard</a>
+</nav>
 
-                <div class="form-group col-md-6">
-                    {{ form.mean_perimeter.label }} {{ form.mean_perimeter(class_="form-control") }}
-                    {% if form.mean_perimeter.errors %}
-                        <span style="color: red;">{{ form.mean_perimeter.errors[0] }}</span>
-                    {% endif %}
-                </div>
+<div class="container-fluid">
+    <h2 class="text-center my-4">Enter Cancer Diagnosis Features</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-12">
+            <div class="form-container">
+                <form method="POST" action="{{ url_for('input_data') }}">
+                    {{ form.hidden_tag() }}
+                    {{ form.csrf_token }}
+
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.mean_radius.label(class="form-label") }}
+                            {{ form.mean_radius(class="form-control", size=20) }}
+                            {% if form.mean_radius.errors %}
+                                <div class="text-danger">{{ form.mean_radius.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.mean_perimeter.label(class="form-label") }}
+                            {{ form.mean_perimeter(class="form-control", size=20) }}
+                            {% if form.mean_perimeter.errors %}
+                                <div class="text-danger">{{ form.mean_perimeter.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.mean_area.label(class="form-label") }}
+                            {{ form.mean_area(class="form-control", size=20) }}
+                            {% if form.mean_area.errors %}
+                                <div class="text-danger">{{ form.mean_area.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.mean_concavity.label(class="form-label") }}
+                            {{ form.mean_concavity(class="form-control", size=20) }}
+                            {% if form.mean_concavity.errors %}
+                                <div class="text-danger">{{ form.mean_concavity.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.mean_concave_points.label(class="form-label") }}
+                            {{ form.mean_concave_points(class="form-control", size=20) }}
+                            {% if form.mean_concave_points.errors %}
+                                <div class="text-danger">{{ form.mean_concave_points.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.worst_radius.label(class="form-label") }}
+                            {{ form.worst_radius(class="form-control", size=20) }}
+                            {% if form.worst_radius.errors %}
+                                <div class="text-danger">{{ form.worst_radius.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.worst_perimeter.label(class="form-label") }}
+                            {{ form.worst_perimeter(class="form-control", size=20) }}
+                            {% if form.worst_perimeter.errors %}
+                                <div class="text-danger">{{ form.worst_perimeter.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.worst_area.label(class="form-label") }}
+                            {{ form.worst_area(class="form-control", size=20) }}
+                            {% if form.worst_area.errors %}
+                                <div class="text-danger">{{ form.worst_area.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.worst_concavity.label(class="form-label") }}
+                            {{ form.worst_concavity(class="form-control", size=20) }}
+                            {% if form.worst_concavity.errors %}
+                                <div class="text-danger">{{ form.worst_concavity.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            {{ form.worst_concave_points.label(class="form-label") }}
+                            {{ form.worst_concave_points(class="form-control", size=20) }}
+                            {% if form.worst_concave_points.errors %}
+                                <div class="text-danger">{{ form.worst_concave_points.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            {{ form.submit(class="btn btn-primary btn-block") }}
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    {{ form.mean_area.label }} {{ form.mean_area(class_="form-control") }}
-                    {% if form.mean_area.errors %}
-                        <span style="color: red;">{{ form.mean_area.errors[0] }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group col-md-6">
-                    {{ form.mean_concavity.label }} {{ form.mean_concavity(class_="form-control") }}
-                    {% if form.mean_concavity.errors %}
-                        <span style="color: red;">{{ form.mean_concavity.errors[0] }}</span>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    {{ form.mean_concave_points.label }} {{ form.mean_concave_points(class_="form-control") }}
-                    {% if form.mean_concave_points.errors %}
-                        <span style="color: red;">{{ form.mean_concave_points.errors[0] }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group col-md-6">
-                    {{ form.worst_radius.label }} {{ form.worst_radius(class_="form-control") }}
-                    {% if form.worst_radius.errors %}
-                        <span style="color: red;">{{ form.worst_radius.errors[0] }}</span>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    {{ form.worst_perimeter.label }} {{ form.worst_perimeter(class_="form-control") }}
-                    {% if form.worst_perimeter.errors %}
-                        <span style="color: red;">{{ form.worst_perimeter.errors[0] }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group col-md-6">
-                    {{ form.worst_area.label }} {{ form.worst_area(class_="form-control") }}
-                    {% if form.worst_area.errors %}
-                        <span style="color: red;">{{ form.worst_area.errors[0] }}</span>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    {{ form.worst_concavity.label }} {{ form.worst_concavity(class_="form-control") }}
-                    {% if form.worst_concavity.errors %}
-                        <span style="color: red;">{{ form.worst_concavity.errors[0] }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group col-md-6">
-                    {{ form.worst_concave_points.label }} {{ form.worst_concave_points(class_="form-control") }}
-                    {% if form.worst_concave_points.errors %}
-                        <span style="color: red;">{{ form.worst_concave_points.errors[0] }}</span>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="form-group text-center">
-                {{ form.submit(class_="btn btn-primary") }}
-            </div>
-        </form>
+        </div>
     </div>
+</div>
+
 {% endblock %}
